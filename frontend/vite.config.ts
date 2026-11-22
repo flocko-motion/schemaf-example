@@ -1,0 +1,14 @@
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    port: 8002,
+    strictPort: true,
+  },
+  build: {
+    // Runtime config (config.gen.ts) uses top-level await.
+    target: "es2022",
+  },
+});

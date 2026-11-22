@@ -1,0 +1,780 @@
+{
+  "components": {
+    "schemas": {
+      "Error": {
+        "properties": {
+          "code": {
+            "description": "Machine-readable code: an app code, or the default code of the status (bad_request, unauthorized, forbidden, not_found, conflict, gone, precondition_failed, too_large, unprocessable, too_many_requests, not_implemented, bad_gateway, unavailable, gateway_timeout, internal, method_not_allowed, not_acceptable, unsupported_media_type).",
+            "type": "string"
+          },
+          "error": {
+            "description": "The message. On 5xx always the status text.",
+            "type": "string"
+          },
+          "id": {
+            "description": "On 5xx only: the id the full error is logged under.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "error",
+          "code"
+        ],
+        "type": "object"
+      },
+      "GetNumberResp": {
+        "properties": {
+          "number": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "number"
+        ],
+        "type": "object"
+      },
+      "SchemafAuth0LoginRequest": {
+        "properties": {
+          "id_token": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id_token"
+        ],
+        "type": "object"
+      },
+      "SchemafErrorDetails": {
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "error": {
+            "description": "The full error.",
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "misuse": {
+            "description": "The misuse of the error API, if any.",
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer"
+          },
+          "subject": {
+            "description": "The caller, if authenticated.",
+            "type": "string"
+          },
+          "time": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "time",
+          "method",
+          "path",
+          "status",
+          "code",
+          "error"
+        ],
+        "type": "object"
+      },
+      "SchemafLoginResponse": {
+        "properties": {
+          "subject": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "subject",
+          "token"
+        ],
+        "type": "object"
+      },
+      "SchemafRefreshResponse": {
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "token"
+        ],
+        "type": "object"
+      },
+      "SchemafUpdateRequest": {
+        "properties": {
+          "version": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "version"
+        ],
+        "type": "object"
+      },
+      "SchemafUpdateState": {
+        "properties": {
+          "available": {
+            "items": {
+              "properties": {
+                "notes": {
+                  "type": "string"
+                },
+                "version": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "version",
+                "notes"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "checked": {
+            "type": "string"
+          },
+          "install": {
+            "properties": {
+              "finished": {
+                "type": "string"
+              },
+              "from": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "started": {
+                "type": "string"
+              },
+              "state": {
+                "enum": [
+                  "installing",
+                  "installed",
+                  "rolled-back",
+                  "failed",
+                  "rollback-failed"
+                ],
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "version",
+              "from",
+              "state",
+              "started",
+              "finished",
+              "message"
+            ],
+            "type": "object"
+          },
+          "request": {
+            "properties": {
+              "message": {
+                "type": "string"
+              },
+              "state": {
+                "enum": [
+                  "accepted",
+                  "rejected"
+                ],
+                "type": "string"
+              },
+              "time": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "version",
+              "state",
+              "message",
+              "time"
+            ],
+            "type": "object"
+          },
+          "running": {
+            "description": "The running version; empty in development.",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "updater not enabled",
+              "idle",
+              "installing"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "running",
+          "status",
+          "available"
+        ],
+        "type": "object"
+      },
+      "SchemafUser": {
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "type": "object"
+      },
+      "SetNumberReq": {
+        "properties": {
+          "number": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "number"
+        ],
+        "type": "object"
+      },
+      "SetNumberResp": {
+        "properties": {
+          "number": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "number"
+        ],
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "bearerFormat": "JWT",
+        "scheme": "bearer",
+        "type": "http"
+      },
+      "cookieAuth": {
+        "in": "cookie",
+        "name": "schemaf-example_session",
+        "type": "apiKey"
+      }
+    }
+  },
+  "info": {
+    "title": "API",
+    "version": "1.0.0"
+  },
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/auth/auth0/login": {
+      "post": {
+        "description": "Verifies the ID token from the Auth0 SPA SDK and starts a schemaf session. 404 if Auth0 is not configured on this instance.",
+        "operationId": "postApiAuthAuth0Login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SchemafAuth0LoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchemafLoginResponse"
+                }
+              }
+            },
+            "description": "Session started; the session cookie is set"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "summary": "Sign in with an Auth0 ID token"
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "description": "Revokes the current session (if any) and clears the session cookie.",
+        "operationId": "postApiAuthLogout",
+        "responses": {
+          "204": {
+            "description": "Logged out"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "summary": "End the current session"
+      }
+    },
+    "/api/auth/refresh": {
+      "post": {
+        "operationId": "postApiAuthRefresh",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchemafRefreshResponse"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
+        ],
+        "summary": "Get a fresh token for the current session"
+      }
+    },
+    "/api/auth/{provider}/login": {
+      "post": {
+        "description": "Passes the request to the named identity provider and starts a schemaf session. The body is defined by the provider.",
+        "operationId": "postApiAuthProviderLogin",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "provider",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchemafLoginResponse"
+                }
+              }
+            },
+            "description": "Session started; the session cookie is set"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "summary": "Sign in with an identity provider"
+      }
+    },
+    "/api/config": {
+      "get": {
+        "description": "Every PUBLIC_* environment variable, keyed by its full name. Read it in the frontend through config() from config.gen.ts.",
+        "operationId": "getApiConfig",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "summary": "Public frontend config"
+      }
+    },
+    "/api/errors/{id}": {
+      "get": {
+        "description": "The details stored for the 5xx answered with this id: open in development mode, in production only to callers the app allows (app.CanSeeErrorDetails). 404 when the id is unknown or expired (kept: newest 1000, at most 24 hours, per process).",
+        "operationId": "getApiErrorsId",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchemafErrorDetails"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {},
+          {
+            "bearerAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
+        ],
+        "summary": "Details of a server error"
+      }
+    },
+    "/api/health": {
+      "get": {
+        "description": "\"status\" is \"ok\" or \"error\", \"db\" and every registered health check are \"ok\" or \"error: …\". 503 (with the same body) when anything is unhealthy.",
+        "operationId": "getApiHealth",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Healthy"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Unhealthy"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "summary": "Health check"
+      }
+    },
+    "/api/number": {
+      "get": {
+        "description": "Returns 0 if no number has been set yet.",
+        "operationId": "getApiNumber",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetNumberResp"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "summary": "Returns the stored number."
+      },
+      "put": {
+        "description": "Replaces any previously stored value.",
+        "operationId": "putApiNumber",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetNumberReq"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SetNumberResp"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "summary": "Stores a number."
+      }
+    },
+    "/api/status": {
+      "get": {
+        "description": "Mode (development or production), uptime, last backup, active identity providers, and every registered status provider.",
+        "operationId": "getApiStatus",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "summary": "Service status"
+      }
+    },
+    "/api/updates": {
+      "get": {
+        "description": "The running version, the verified versions the app may request (with their release notes), and the last install and request. Status \"updater not enabled\" without an updater on the run host. 403 until the app authorizes callers (app.SetUpdatesAuth).",
+        "operationId": "getApiUpdates",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchemafUpdateState"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
+        ],
+        "summary": "The instance's updates"
+      }
+    },
+    "/api/updates/request": {
+      "post": {
+        "description": "Asks the run host's updater to install one of the available versions; the updater checks it again and decides. 403 until the app authorizes callers (app.SetUpdatesAuth); 409 updater_not_enabled or install_running; 422 version_not_available.",
+        "operationId": "postApiUpdatesRequest",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SchemafUpdateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchemafUpdateRequest"
+                }
+              }
+            },
+            "description": "Requested"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
+        ],
+        "summary": "Request the install of a version"
+      }
+    },
+    "/api/user/me": {
+      "get": {
+        "description": "The subject of the caller.",
+        "operationId": "getApiUserMe",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchemafUser"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
+        ],
+        "summary": "The authenticated caller"
+      }
+    }
+  }
+}
