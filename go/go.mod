@@ -3,7 +3,7 @@ module schemaf.local/schemaf-example
 go 1.27.4
 
 require (
-	github.com/flocko-motion/schemaf v1.22.1
+	github.com/flocko-motion/schemaf v1.23.0
 	github.com/oapi-codegen/runtime v1.8.0
 )
 
